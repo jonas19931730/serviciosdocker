@@ -23,7 +23,7 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 @Entity
-@Table(name = "nwi_cab_integracion_sap")
+@Table(name = "nwi_cab_integracion_sap_atunera")
 @TypeDefs({ @TypeDef(name = "json", typeClass = JsonStringType.class),
 		@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class) })
 public class NwiCabIntegracionSap implements Serializable {
