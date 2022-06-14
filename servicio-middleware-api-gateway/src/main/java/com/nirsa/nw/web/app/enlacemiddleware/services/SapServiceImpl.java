@@ -77,7 +77,8 @@ public class SapServiceImpl implements ISapService {
 			
 			return resp;
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, Object> enviarEmpacadora(Map<String, Object> envio,String tipo_envio) {
 		middlewareRest = new RestTemplateBuilder()
@@ -85,6 +86,7 @@ public class SapServiceImpl implements ISapService {
                 .build();
 		
 			String endpoint = "";
+			Map<String,Object> resp = new HashMap<>();
 		
 			switch(tipo_envio) {
 				case "NO":
@@ -93,16 +95,19 @@ public class SapServiceImpl implements ISapService {
 				case "EM":
 					endpoint = "EntradaMercancias";
 					break;
-				case "CO":
+				case "OF":
 					endpoint = "CreacionOrdenProd";
-					break;
-				
+					break;		
 			}
 			
 			HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(envio);
 			
-			@SuppressWarnings("unchecked")
-			Map<String,Object> resp = middlewareRest.exchange(ValoresConstantes.urlEnlace.concat(endpoint), HttpMethod.POST, entity, Map.class).getBody();
+			if(!endpoint.isEmpty()) {
+				resp = middlewareRest.exchange(ValoresConstantes.urlEnlace.concat(endpoint), HttpMethod.POST, entity, Map.class).getBody();
+
+			}
+			resp.put("mensaje", "Tipo de integración no permitida");
+			
 			
 			return resp;
 		

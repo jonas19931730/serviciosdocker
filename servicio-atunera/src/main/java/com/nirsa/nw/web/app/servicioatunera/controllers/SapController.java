@@ -72,15 +72,15 @@ public class SapController {
 			return new ResponseEntity<Map<String,Object>>(respuestaSap,HttpStatus.OK);
 	}
 	
-	@PostMapping("/enviar_empacadora/{tipo_envio}")
-	public ResponseEntity<Map<String,Object>> enviarEmpacadora(@RequestBody Map<String,Object> responseSap,@PathVariable String tipo_envio) {
+	@PostMapping("/enviar_empacadora")
+	public ResponseEntity<Map<String,Object>> enviarEmpacadora(@RequestBody Map<String,Object> responseSap) {
 		Map<String,Object> response = new HashMap<String,Object>();
 		
 		try {
-			response = this.sapService.enviarEmpacadora(response, tipo_envio);
+			response = this.sapService.enviarEmpacadora(response, "NO");
 		}
 		catch(DataAccessException ex) {
-			response.put("error", ex.getMessage());
+			//response.put("error", ex.getMessage());
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);

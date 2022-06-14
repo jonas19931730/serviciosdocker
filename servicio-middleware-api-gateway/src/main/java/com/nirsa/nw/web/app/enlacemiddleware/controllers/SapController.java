@@ -67,7 +67,7 @@ public class SapController {
 		Map<String, Object> response = new HashMap<>();
 		
 		try {
-			response = this.sapService.enviarEmpacadora(envioSap, tipo_integracion);
+			response = this.sapService.enviarEmpacadora(envioSap,tipo_integracion );
 		} 
 		catch (Exception ex) {
 			if (ex != null) {
