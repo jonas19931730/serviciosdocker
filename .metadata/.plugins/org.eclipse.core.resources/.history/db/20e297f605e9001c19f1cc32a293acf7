@@ -1,0 +1,137 @@
+package com.nirsa.nw.web.app.servicioatunera.controllers;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.nirsa.nw.web.app.servicioatunera.model.dto.RequestMonitor;
+import com.nirsa.nw.web.app.servicioatunera.model.entity.NwiDetIntegracionSap;
+import com.nirsa.nw.web.app.servicioatunera.model.entity.ResponseSap;
+import com.nirsa.nw.web.app.servicioatunera.model.services.IEnlaceMiddlewareSap;
+import com.nirsa.nw.web.app.servicioatunera.model.services.INwiDetIntegracionSapService;
+import com.nirsa.nw.web.app.servicioatunera.model.services.ISapService;
+import com.nirsa.nw.web.app.servicioatunera.utils.ValoresConstantes;
+
+@CrossOrigin(origins = ValoresConstantes.urlFront)
+@RequestMapping("/sap")
+@RestController
+public class SapController {
+	
+	@Autowired
+	IEnlaceMiddlewareSap enlace;
+	
+	@Autowired
+	ISapService sapService;
+	
+	@Autowired
+	INwiDetIntegracionSapService detService;
+	
+	
+	@PostMapping("/enviarSap")
+	public ResponseEntity<?> enviar(@RequestBody List<NwiDetIntegracionSap> request) {
+		Map<String,Object> response = new HashMap<>();
+		Object data = null;
+		
+		try {
+			data = enlace.enviarProceso(request);
+		}
+		catch(DataAccessException ex) {
+			response.put("mensaje", ex.getMostSpecificCause().getMessage());
+			return new ResponseEntity<Object>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		if(data==null) {
+			response.put("mensaje","No se encontraron datos");
+			return new ResponseEntity<Object>(response,HttpStatus.NOT_FOUND);
+		}
+		response.put("mensaje", "Datos enviados con éxito");
+		response.put("data", data);
+		return new ResponseEntity<Object>(response,HttpStatus.OK);
+		
+	}
+	
+	@PostMapping("/enviar")
+	public ResponseEntity<?> enviarNotificaciones(@RequestBody RequestMonitor request) {
+		Map<String,Object> response = new HashMap<>();
+		Map<String,Object> data = null;
+		
+		try {
+			 data = sapService.enviar(request);
+		}
+		catch(DataAccessException ex) {
+			response.put("mensaje", ex.getMostSpecificCause().getMessage());
+			return new ResponseEntity<Object>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		if(data==null) {
+			response.put("mensaje","No se encontraron datos");
+			return new ResponseEntity<Object>(response,HttpStatus.NOT_FOUND);
+		}
+		response.put("mensaje", "Datos enviados con éxito");
+		response.put("data", data);
+		return new ResponseEntity<Object>(response,HttpStatus.OK);
+		
+	}
+	
+	@PostMapping("/enviar/{id_detalle}")
+	public Object enviarSap(@PathVariable Long id_detalle) {
+		
+		NwiDetIntegracionSap detalle = null; 
+		Object resp = null;
+		
+		try {
+			detalle = this.detService.findById(id_detalle);
+			
+			if(detalle != null) {
+				detalle.setFecharegistro(new Date());
+				//detalle.setEstadoenviosap(1);
+				//detalle.setEstadoenviosap(1);
+				//detalle.setFecharespuesta(new Date());
+				//detalle.setUsuarioregistra("encartonado");
+				this.detService.guardar(detalle);
+				//resp = enlace.enviarProceso(detalle);
+				
+			}
+		}
+		catch(DataAccessException ex) {
+			return null;
+		}
+		
+		return resp;
+	}
+	
+	@PostMapping("/recibir")
+	public ResponseEntity<Map<String,Object>> recibir(@RequestBody List<ResponseSap> responseSap) {
+			Map<String,Object> response = new HashMap<String,Object>();
+			try {
+				this.sapService.recibirSap(responseSap);
+			}
+			catch(DataAccessException ex) {
+				response.put("estado", "error");
+				response.put("mensaje", ex.getMostSpecificCause().getMessage());
+				
+				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			response.put("estado", "ok");
+			response.put("mensaje", "Transacción correcta");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+	}
+	
+	@GetMapping("/prueba")
+	public String prueba() {
+		return "ok";
+	}
+	
+	
+}

@@ -1,0 +1,5 @@
+package com.nirsa.nw.web.app.servicioatunera.model.dto;
+
+public class ResponseMonitor {
+	
+}

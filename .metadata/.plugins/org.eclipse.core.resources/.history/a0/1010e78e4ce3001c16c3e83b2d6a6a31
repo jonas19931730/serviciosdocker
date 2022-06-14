@@ -1,0 +1,26 @@
+package com.nirsa.nw.utils.json;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nirsa.nw.utils.json.JsonDeserializador;
+public class Prueba {
+
+	public static void main(String[] args) throws JsonMappingException, JsonProcessingException {
+		JsonDeserializador jsonD = JsonDeserializador.getInstance();
+		
+		String jsonIn = "{\"id\":46,\"nombre\":\"Miguel\",\"empresa\":\"Autentia\"}";
+		
+		List<String> json = jsonD.getKeysInJsonUsingMaps(jsonIn, new ObjectMapper());
+		
+		System.out.println(json.toString());
+		
+		List<Object> jsonValues = jsonD.getValuesInJsonUsingMaps(jsonIn, new ObjectMapper());
+		
+		System.out.println(jsonValues.toString());
+
+	}
+}

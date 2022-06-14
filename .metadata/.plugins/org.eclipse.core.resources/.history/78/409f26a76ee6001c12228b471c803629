@@ -1,0 +1,5 @@
+package com.nirsa.nw.web.app.servicioatunera.utils;
+
+public class ValoresConstantes {
+	public static final String urlMiddleware= "http://172.17.17.13:8091/enviarSap";
+}

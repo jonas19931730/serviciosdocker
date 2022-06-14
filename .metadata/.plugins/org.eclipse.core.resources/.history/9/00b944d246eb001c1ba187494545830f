@@ -1,0 +1,31 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowCredentials: true
+            allowedMethods: 
+            - GET
+            - POST
+            - PUT
+            - DELETE
+            allowed-origins:
+            - origin
+            - content-type
+            - accept
+            - authorization
+            - cookie
+      routes:
+      - id: servicio-atunera
+        uri: lb://servicio-atunera
+        predicates:          - Path=/api/atunera/**
+        filters:
+          - StripPrefix=2
+      - id: servicio-auth-local
+        uri: lb://servicio-auth-local
+        predicates:
+          - Path=/api/authlocal/**
+        filters:
+          - StripPrefix=2

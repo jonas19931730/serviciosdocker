@@ -1,0 +1,42 @@
+package com.nirsa.nw.web.app.servicioatunera.model.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Embeddable;
+
+@Embeddable
+public class NwiLineaDetallePK implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Long iddetalleintegracionsap;
+	
+	private Integer secuencia;
+
+	public NwiLineaDetallePK() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Long getIddetalleintegracionsap() {
+		return iddetalleintegracionsap;
+	}
+
+	public void setIddetalleintegracionsap(Long iddetalleintegracionsap) {
+		this.iddetalleintegracionsap = iddetalleintegracionsap;
+	}
+
+	public Integer getSecuencia() {
+		return secuencia;
+	}
+
+	public void setSecuencia(Integer secuencia) {
+		this.secuencia = secuencia;
+	}
+	
+	
+
+}

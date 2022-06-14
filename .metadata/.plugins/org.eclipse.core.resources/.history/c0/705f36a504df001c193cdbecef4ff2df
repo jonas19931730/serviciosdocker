@@ -1,0 +1,54 @@
+package com.nirsa.nw.web.app.servicioatunera.model.entity;
+
+import java.io.Serializable;
+
+import org.json.JSONObject;
+
+public class ResponseSap implements Serializable {
+
+	private Long idfabricacion;
+	private Long idnwicabintegracionsap;
+	private Long iddetintegracionsap;
+	private Json json;
+
+	public ResponseSap() {
+	}
+
+	public Long getIdfabricacion() {
+		return idfabricacion;
+	}
+
+	public void setIdfabricacion(Long idfabricacion) {
+		this.idfabricacion = idfabricacion;
+	}
+
+	public Long getIdnwicabintegracionsap() {
+		return idnwicabintegracionsap;
+	}
+
+	public void setIdnwicabintegracionsap(Long idnwicabintegracionsap) {
+		this.idnwicabintegracionsap = idnwicabintegracionsap;
+	}
+
+	public Long getIddetintegracionsap() {
+		return iddetintegracionsap;
+	}
+
+	public void setIddetintegracionsap(Long iddetintegracionsap) {
+		this.iddetintegracionsap = iddetintegracionsap;
+	}
+
+	public Json getJson() {
+		return json;
+	}
+
+	public void setJson(Json json) {
+		this.json = json;
+	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+}

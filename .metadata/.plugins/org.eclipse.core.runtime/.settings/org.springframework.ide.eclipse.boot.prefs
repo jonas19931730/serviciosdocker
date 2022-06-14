@@ -1,0 +1,17 @@
+EditStartersDialog.pom.autosave=true
+eclipse.preferences.version=1
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.cloud-eureka=1
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.devtools=3
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.web=1
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.artifactId=nw-json-deserializador
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.bootVersion=2.7.0
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.description=Deserializa estructuras json
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.groupId=com.nirsa.nw.utils
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.javaVersion=11
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.language=java
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.name=json-deserializador
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.packageName=com.nirsa.nw.utils
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.packaging=jar
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.type=MAVEN
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.version=0.0.1-SNAPSHOT
+org.springframework.ide.eclipse.boot.wizard.initializr.url=https\://start.spring.io\n

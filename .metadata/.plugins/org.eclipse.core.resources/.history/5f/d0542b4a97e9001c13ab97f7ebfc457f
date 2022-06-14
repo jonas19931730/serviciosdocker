@@ -1,0 +1,56 @@
+package com.nirsa.nw.web.app.enlacemiddleware.services;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.nirsa.nw.web.app.enlacemiddleware.utils.ValoresConstantes;
+
+@Service
+public class SapServiceImpl implements ISapService {
+
+	@Autowired
+	private RestTemplate middlewareRest;
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String,Object> recibir(Map<String,Object> responseSap) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(responseSap, headers);
+
+		return middlewareRest.exchange(ValoresConstantes.urlAtunera, HttpMethod.POST, entity, Map.class).getBody();
+		
+	}
+
+	@Override
+	public Map<String,Object> enviar(Map<String,Object> envioSap) {
+		
+		Map<String,Object> response = new HashMap<>();
+		
+		middlewareRest = new RestTemplateBuilder()
+	                .basicAuthentication(ValoresConstantes.userSap, ValoresConstantes.claveSap)
+	                .build();
+	
+		HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(envioSap);
+
+		@SuppressWarnings("unchecked")
+		Map<String,Object> resp = middlewareRest.exchange(ValoresConstantes.urlAtunera, HttpMethod.POST, entity, Map.class).getBody();
+		
+		response.put("response", resp);
+		return response;
+		
+	}
+
+	
+
+}

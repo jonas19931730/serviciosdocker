@@ -1,0 +1,17 @@
+package com.nirsa.nw.web.app.enlacemiddleware.services;
+
+import java.util.List;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.nirsa.nw.web.app.enlacemiddleware.models.dto.RequestSap;
+import com.nirsa.nw.web.app.enlacemiddleware.models.dto.ResponseSap;
+import com.nirsa.nw.web.app.enlacemiddleware.models.dto.NwiDetIntegracionSapDTO;
+
+public interface ISapService {
+
+	public Object enviar(List<RequestSap> listado);
+
+	public void recibir(List<ResponseSap> responseSap);
+	
+}

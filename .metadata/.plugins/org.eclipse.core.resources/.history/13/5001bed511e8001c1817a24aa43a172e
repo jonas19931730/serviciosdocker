@@ -1,0 +1,15 @@
+package com.nirsa.nw.web.app.servicioatunera.model.services;
+
+import java.util.List;
+import java.util.Map;
+
+import com.nirsa.nw.web.app.servicioatunera.model.dto.RequestMonitor;
+import com.nirsa.nw.web.app.servicioatunera.model.entity.ResponseSap;
+
+public interface ISapService {
+	public Long enviar(RequestMonitor request);
+
+	public void recibirSap(List<ResponseSap> responseSap);
+
+	public Long enviar(Map<String, Object> request);
+}

@@ -1,0 +1,37 @@
+package com.nirsa.nw.web.app.servicioatunera.model.entity;
+
+import java.util.Map;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
+
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
+
+@Entity
+@Table(name="nwi_linea_detalle_sap")
+@TypeDefs({ @TypeDef(name = "json", typeClass = JsonStringType.class),
+	@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class) })
+
+public class NwiLineaDetalleSap {
+	
+	@EmbeddedId
+	private NwiLineaDetalleSapPK nwiLineaPk;
+	
+	private Integer estadorespuestasap;
+	
+	@Type(type = "jsonb")
+	@Column(columnDefinition = "json")
+	private Map<String, Object> jsonEnvioSap;
+
+	@Type(type = "jsonb")
+	@Column(columnDefinition = "json")
+	private Map<String, Object> jsonrespuestasap;
+
+}

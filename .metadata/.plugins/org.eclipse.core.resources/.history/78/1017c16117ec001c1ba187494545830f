@@ -1,0 +1,81 @@
+package com.nirsa.nw.web.app.enlacemiddleware.services;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.nirsa.nw.web.app.enlacemiddleware.utils.ValoresConstantes;
+
+@Service
+public class SapServiceImpl implements ISapService {
+
+	@Autowired
+	private RestTemplate middlewareRest;
+
+	@Async
+	@Override
+	public Map<String,Object> recibir(List<Map<String,Object>> responseSap) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		HttpEntity<List<Map<String,Object>>> entity = new HttpEntity<List<Map<String,Object>>>(responseSap, headers);
+		Map<String,Object> response = new HashMap<>();
+		
+		try {
+			middlewareRest.exchange(ValoresConstantes.urlAtunera, HttpMethod.POST, entity, Map.class).getBody();
+		}
+		catch(Exception ex) {
+			response.put("mensaje", ex.getMessage());
+		}
+		response.put("mensaje", "Respuesta recibida con éxito");
+		return response;
+	}
+
+	@Override
+	public Map<String,Object> enviarCreacionOrden(Map<String,Object> envioSap) {
+				
+		middlewareRest = new RestTemplateBuilder()
+	                .basicAuthentication(ValoresConstantes.userSap, ValoresConstantes.claveSap)
+	                .build();
+	
+		HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(envioSap);
+		
+		
+		@SuppressWarnings("unchecked")
+		Map<String,Object> resp = middlewareRest.exchange(ValoresConstantes.urlEnlace.concat("CreacionOrdenProd"), HttpMethod.POST, entity, Map.class).getBody();
+		
+		return resp;
+		
+	}
+
+	@Override
+	public Map<String, Object> enviarNotificacion(List<Map<String, Object>> envio) {
+		
+		middlewareRest = new RestTemplateBuilder()
+                .basicAuthentication(ValoresConstantes.userSap, ValoresConstantes.claveSap)
+                .build();
+		
+			Map<String,Object> envioFinal = new HashMap<>();
+			
+			envioFinal.put("Notificacion", envio);
+
+			HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(envioFinal);
+			
+			
+			@SuppressWarnings("unchecked")
+			Map<String,Object> resp = middlewareRest.exchange(ValoresConstantes.urlEnlace.concat("CreaNotificacion"), HttpMethod.POST, entity, Map.class).getBody();
+			
+			return resp;
+	}
+
+}

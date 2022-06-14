@@ -1,0 +1,61 @@
+package com.nirsa.nw.web.app.servicioatunera.model.services.Impl;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
+
+import com.nirsa.nw.web.app.servicioatunera.utils.ValoresConstantes;
+import com.nirsa.nw.web.app.servicioatunera.model.entity.NwiDetIntegracionSap;
+import com.nirsa.nw.web.app.servicioatunera.model.entity.ResponseSap;
+import com.nirsa.nw.web.app.servicioatunera.model.services.INwiDetIntegracionSapService;
+import com.nirsa.nw.web.app.servicioatunera.model.services.ISapService;
+
+@Service
+public class SapService implements ISapService {
+	
+	@Autowired
+	INwiDetIntegracionSapService nwiDetService;
+	
+	@Autowired
+	private RestTemplate conexionEnlace;
+
+	@Override
+	@Transactional
+	public void recibirSap(List<ResponseSap> responseSap) {
+		
+		for(ResponseSap sap:responseSap) {
+			NwiDetIntegracionSap nwiDet = nwiDetService.findByDetalleyCabecera(sap.getIdintegracion(),sap.getIdintegracion());
+			if(nwiDet!=null) {
+				nwiDet.setEstadorespuestasap(1);
+				nwiDet.setFecharespuesta(new Date());
+				nwiDet.setJsonrespuestasap(sap.getRespuestaSap());
+				nwiDetService.guardar(nwiDet);
+			}
+		}
+		enviarIntegrador(responseSap);
+	}
+	
+	private void enviarIntegrador(List<ResponseSap> responseSap) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		HttpEntity<List<ResponseSap>> entity = new HttpEntity<List<ResponseSap>>(responseSap, headers);
+
+		conexionEnlace.exchange(ValoresConstantes.urlIntegrador, HttpMethod.POST, entity, String.class).getBody();
+	}
+
+	@Override
+	public Object enviar(List<NwiDetIntegracionSap> listado) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

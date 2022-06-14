@@ -1,0 +1,14 @@
+package com.nirsa.nw.web.app.enlacemiddleware.services;
+
+import java.util.List;
+import java.util.Map;
+
+import com.nirsa.nw.web.app.enlacemiddleware.models.dto.ResponseSap;
+
+public interface ISapService {
+
+	public Map<String,Object> enviar(Map<String,Object> envio);
+
+	public void recibir(List<ResponseSap> responseSap);
+	
+}

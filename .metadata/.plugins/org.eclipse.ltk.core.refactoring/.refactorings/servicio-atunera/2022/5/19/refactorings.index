@@ -1,0 +1,21 @@
+1651587602335	Delete element
+1651587671482	Rename package 'com.nirsa.nw.web.app.models.dao'
+1651604513606	Rename package 'com.nirsa.nw.web.app'
+1651604533619	Rename package 'com.nirsa.nw.web.app.controllers'
+1651604548332	Rename package 'com.nirsa.nw.web.app.model.dao'
+1651604610009	Rename package 'com.nirsa.nw.web.app.model.entity'
+1651604624887	Rename package 'com.nirsa.nw.web.app.model.services'
+1651604642687	Rename package 'com.nirsa.nw.web.app.model.services.Impl'
+1651604681579	Delete element
+1651608276814	Rename package 'com.nirsa.nw.web.app.servicioatunera.controllers'
+1651608291302	Rename package 'com.nirsa.nw.web.app.servicioatunera.model.dao'
+1651608306578	Rename package 'com.nirsa.nw.web.app.servicioatunera.model.entity'
+1651608320276	Rename package 'com.nirsa.nw.web.app.servicioatunera.model.services'
+1651608342222	Rename package 'com.nirsa.nw.web.app.servicioatunera.model.services.Impl'
+1651608399767	Rename type 'EncartonadoController'
+1651608433607	Rename type 'IEncartonadoDao'
+1651608446952	Delete element
+1651608632174	Delete element
+1651609256672	Rename type 'EncartonadoServiceImpl'
+1651615192373	Delete element
+1651615741699	Rename type 'ILogSapDao'

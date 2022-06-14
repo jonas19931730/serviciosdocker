@@ -1,0 +1,16 @@
+package com.nirsa.nw.web.app.enlacemiddleware.services;
+
+import java.util.List;
+import java.util.Map;
+
+public interface ISapService {
+
+	public Map<String,Object> enviar(Map<String,Object> envio);
+	
+	public Map<String,Object> enviarNotificacion(Map<String,Object> envio);
+	
+	public Map<String,Object> enviarOrden(Map<String,Object> envio);
+
+	public Map<String,Object> recibir(List<Map<String,Object>> responseSap);
+	
+}

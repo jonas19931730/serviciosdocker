@@ -1,0 +1,44 @@
+package com.nirsa.nw.web.app.servicioatunera.model.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Embeddable
+public class NwiLineaDetallePK implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@ManyToOne
+	@JoinColumn(name = "idcabintegracionsap")
+	private NwiCabIntegracionSap nwicabintegracionsap;
+
+	private Integer idposicion;
+
+	public NwiLineaDetallePK() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public NwiCabIntegracionSap getNwicabintegracionsap() {
+		return nwicabintegracionsap;
+	}
+
+	public void setNwicabintegracionsap(NwiCabIntegracionSap nwicabintegracionsap) {
+		this.nwicabintegracionsap = nwicabintegracionsap;
+	}
+
+	public Integer getIdposicion() {
+		return idposicion;
+	}
+
+	public void setIdposicion(Integer idposicion) {
+		this.idposicion = idposicion;
+	}
+
+}

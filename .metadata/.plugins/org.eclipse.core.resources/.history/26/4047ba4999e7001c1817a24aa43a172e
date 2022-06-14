@@ -1,0 +1,34 @@
+package com.nirsa.nw.web.app.servicioatunera.model.dto;
+
+import java.util.Map;
+
+public class RequestMonitor {
+	private Map<String, Object> jsonCabecera;
+}
+
+class Detalle {
+	private Long idnotificacion;
+	private Map<String, Object> jsonValores;
+
+	public Detalle() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Long getIdnotificacion() {
+		return idnotificacion;
+	}
+
+	public void setIdnotificacion(Long idnotificacion) {
+		this.idnotificacion = idnotificacion;
+	}
+
+	public Map<String, Object> getJsonValores() {
+		return jsonValores;
+	}
+
+	public void setJsonValores(Map<String, Object> jsonValores) {
+		this.jsonValores = jsonValores;
+	}
+
+}

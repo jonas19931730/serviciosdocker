@@ -1,0 +1,5 @@
+package com.nirsa.nw.web.app.model.dao;
+
+public interface IUsuarioDao {
+
+}

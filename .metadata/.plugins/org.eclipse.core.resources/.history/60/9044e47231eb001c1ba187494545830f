@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://172.17.102.130:4200"
+      routes:
+      - id: servicio-atunera
+        uri: lb://servicio-atunera
+        predicates:          - Path=/api/atunera/**
+        filters:
+          - StripPrefix=2
+      - id: servicio-auth-local
+        uri: lb://servicio-auth-local
+        predicates:
+          - Path=/api/authlocal/**
+        filters:
+          - StripPrefix=2

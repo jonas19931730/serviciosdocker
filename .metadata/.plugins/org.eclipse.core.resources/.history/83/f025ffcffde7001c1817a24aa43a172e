@@ -1,0 +1,38 @@
+package com.nirsa.nw.web.app.servicioatunera.model.dto;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+public class RequestMonitor implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Map<String, Object> jsonCabecera;
+	private List<Detalle> detalle;
+
+	public RequestMonitor() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Map<String, Object> getJsonCabecera() {
+		return jsonCabecera;
+	}
+
+	public void setJsonCabecera(Map<String, Object> jsonCabecera) {
+		this.jsonCabecera = jsonCabecera;
+	}
+
+	public List<Detalle> getDetalle() {
+		return detalle;
+	}
+
+	public void setDetalle(List<Detalle> detalle) {
+		this.detalle = detalle;
+	}
+
+}
+
+

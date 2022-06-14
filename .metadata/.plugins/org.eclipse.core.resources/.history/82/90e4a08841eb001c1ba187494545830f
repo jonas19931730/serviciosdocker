@@ -1,0 +1,31 @@
+package com.nirsa.nw.web.app.servicioatunera.model.dto;
+
+import java.io.Serializable;
+import java.util.Map;
+
+public class Detalle implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private Integer idposicion;
+	private Map<String, Object> jsonValores;
+
+	public Detalle() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Integer getIdposicion() {
+		return idposicion;
+	}
+
+	public void setIdnotificacion(Integer idposicion) {
+		this.idposicion = idposicion;
+	}
+
+	public Map<String, Object> getJsonValores() {
+		return jsonValores;
+	}
+
+	public void setJsonValores(Map<String, Object> jsonValores) {
+		this.jsonValores = jsonValores;
+	}
+}

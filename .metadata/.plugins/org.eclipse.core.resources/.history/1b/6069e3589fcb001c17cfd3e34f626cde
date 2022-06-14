@@ -1,0 +1,19 @@
+spring.application.name=servicio-atunera
+server.port=${PORT:0}
+
+#eureka.instance.instance-id=${spring.application.name}:${spring.application.instance_id}:${random.value}}
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+
+##BASE DE DATOS
+spring.datasource.url=jdbc:postgresql://localhost:5432/nw_des
+spring.datasource.username=haroldnav
+spring.datasource.password=Nirvana76:
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQL95Dialect
+spring.jpa.hibernate.ddl-auto= update
+logging.level.org.hibernate.SQL=debug
+
+
+

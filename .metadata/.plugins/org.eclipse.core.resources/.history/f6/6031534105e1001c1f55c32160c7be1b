@@ -1,0 +1,59 @@
+package com.nirsa.nw.web.app.servicioatunera.model.services.Impl;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.nirsa.nw.web.app.servicioatunera.model.entity.NwiCabIntegracionSap;
+import com.nirsa.nw.web.app.servicioatunera.model.entity.NwiDetIntegracionSap;
+import com.nirsa.nw.web.app.servicioatunera.model.entity.ResponseSap;
+import com.nirsa.nw.web.app.servicioatunera.model.services.INwiCabIntegracionSapService;
+import com.nirsa.nw.web.app.servicioatunera.model.services.INwiDetIntegracionSapService;
+import com.nirsa.nw.web.app.servicioatunera.model.services.ISapService;
+
+@Service
+public class SapService implements ISapService {
+	
+	@Autowired
+	INwiDetIntegracionSapService nwiDetService;
+	
+	@Autowired
+	INwiCabIntegracionSapService nwiCabService;
+
+	@Override
+	@Transactional
+	public void recibirSap(List<ResponseSap> responseSap) {
+				
+		for(ResponseSap sap:responseSap) {
+			NwiCabIntegracionSap nwiCab = nwiCabService.findById(sap.getIdintegracion());
+			if(nwiCab!=null) {
+				
+				if(sap.getMensaje_error()!=null) {
+					nwiCab.getNwidetintegracionsap().setCodigoerror(sap.getCodigo_respuesta());
+					nwiCab.getNwidetintegracionsap().setMensajeerror(sap.getMensaje_error());
+					nwiCab.getNwidetintegracionsap().setEstadoerror(1);
+					nwiCab.getNwidetintegracionsap().setEstadorespuestasap(0);
+					nwiCab.getNwidetintegracionsap().setFecharespuesta(new Date());
+					nwiCabService.guardar(nwiCab);
+					return;
+				}
+				nwiCab.getNwidetintegracionsap().setEstadoenviosap(1);
+				nwiCab.getNwidetintegracionsap().setEstadoerror(0);
+				nwiCab.getNwidetintegracionsap().setEstadorespuestasap(1);
+				nwiCab.getNwidetintegracionsap().setFecharespuesta(new Date());
+				nwiCab.getNwidetintegracionsap().setJsonrespuestasap(sap.getRespuestaSap());
+				nwiCabService.guardar(nwiCab);
+			}
+		}
+	}
+
+	@Override
+	public Object enviar(List<NwiDetIntegracionSap> listado) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
