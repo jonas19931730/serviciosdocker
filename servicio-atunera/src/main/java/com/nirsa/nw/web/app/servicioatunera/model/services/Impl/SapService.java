@@ -291,7 +291,8 @@ public class SapService implements ISapService {
 		
 		Map<String,Object> respSap = new HashMap<>();
 		
-		String endpoint = ValoresConstantes.urlMiddleware.concat("/enviar_empacadora")/*.concat("/").concat(tipo_envio)*/;
+		String url = "/".concat(tipo_envio);
+		String endpoint = ValoresConstantes.urlMiddleware.concat("/enviar_empacadora").concat(url);
 		
 		respSap = conexionEnlace.postForObject(endpoint, envio, Map.class);
 

@@ -10,4 +10,7 @@ public class ValoresConstantes {
 	
 	//public static final String urlAtunera = "http://172.17.17.14:8090/api/atunera/sap/recibir";
 	public static final String urlAtunera = "http://172.17.102.21:8090/api/atunera/sap/recibir";
+	
+	public static final String urlEmpacadora = "http://172.17.102.21:8080/api/empacadora/recibir";
+
 }

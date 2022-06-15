@@ -31,6 +31,7 @@ public class SapServiceImpl implements ISapService {
 		HttpEntity<List<Map<String,Object>>> entity = new HttpEntity<List<Map<String,Object>>>(responseSap, headers);
 		Map<String,Object> response = new HashMap<>();
 		
+		
 		try {
 			middlewareRest.exchange(ValoresConstantes.urlAtunera, HttpMethod.POST, entity, Map.class).getBody();
 		}
@@ -97,7 +98,11 @@ public class SapServiceImpl implements ISapService {
 					break;
 				case "OF":
 					endpoint = "CreacionOrdenProd";
-					break;		
+					break;
+				default:
+					endpoint = "CreacionOrdenProd";
+
+					break;
 			}
 			
 			HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(envio);
