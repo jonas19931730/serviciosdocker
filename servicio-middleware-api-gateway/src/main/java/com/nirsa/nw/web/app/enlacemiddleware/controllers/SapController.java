@@ -7,13 +7,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nirsa.nw.web.app.enlacemiddleware.services.ISapService;
-
+@CrossOrigin(origins = "*")
 @RestController
 public class SapController {
 
@@ -34,7 +35,7 @@ public class SapController {
 	}
 	
 	@PostMapping("/enviarNotificacion")
-	public Map<String,Object> enviarNotificacion(@RequestBody List<Map<String,Object>> request){
+	public Map<String,Object> enviarNotificacion(@RequestBody Map<String,Object> request){
 		Map<String,Object> response = new HashMap<String,Object>();
 		try {
 			response = sapService.enviarNotificacion(request);		

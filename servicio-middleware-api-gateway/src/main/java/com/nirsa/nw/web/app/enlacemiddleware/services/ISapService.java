@@ -7,7 +7,7 @@ public interface ISapService {
 
 	public Map<String,Object> enviarCreacionOrden(Map<String,Object> envio);
 	
-	public Map<String,Object> enviarNotificacion(List<Map<String,Object>> envio);
+	public Map<String,Object> enviarNotificacion(Map<String,Object> envio);
 	
 	public Map<String,Object> recibir(List<Map<String,Object>> responseSap);
 	

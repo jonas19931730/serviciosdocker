@@ -51,6 +51,7 @@ public class SapServiceImpl implements ISapService {
 	
 		HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(envioSap);
 		
+		System.out.println("ENVIAR ORDEN");
 		
 		@SuppressWarnings("unchecked")
 		Map<String,Object> resp = middlewareRest.exchange(ValoresConstantes.urlEnlace.concat("CreacionOrdenProd"), HttpMethod.POST, entity, Map.class).getBody();
@@ -60,18 +61,13 @@ public class SapServiceImpl implements ISapService {
 	}
 
 	@Override
-	public Map<String, Object> enviarNotificacion(List<Map<String, Object>> envio) {
+	public Map<String, Object> enviarNotificacion(Map<String, Object> envio) {
 		
 		middlewareRest = new RestTemplateBuilder()
                 .basicAuthentication(ValoresConstantes.userSap, ValoresConstantes.claveSap)
                 .build();
 		
-			Map<String,Object> envioFinal = new HashMap<>();
-			
-			envioFinal.put("Notificacion", envio);
-
-			HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(envioFinal);
-			
+			HttpEntity<Map<String,Object>> entity = new HttpEntity<Map<String,Object>>(envio);
 			
 			@SuppressWarnings("unchecked")
 			Map<String,Object> resp = middlewareRest.exchange(ValoresConstantes.urlEnlace.concat("CreaNotificacion"), HttpMethod.POST, entity, Map.class).getBody();
@@ -97,10 +93,10 @@ public class SapServiceImpl implements ISapService {
 					endpoint = "EntradaMercancias";
 					break;
 				case "OF":
-					endpoint = "CreacionOrdenProd";
+					endpoint = "CreaOrdenCompra";
 					break;
 				default:
-					endpoint = "CreacionOrdenProd";
+					endpoint = "CreaOrdenCompra";
 
 					break;
 			}

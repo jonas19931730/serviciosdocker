@@ -1,7 +1,6 @@
 package com.nirsa.nw.web.app.servicioatunera.model.services.Impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,11 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -24,7 +18,6 @@ import com.nirsa.nw.web.app.servicioatunera.model.entity.NwiCabIntegracionSap;
 import com.nirsa.nw.web.app.servicioatunera.model.entity.NwiDetIntegracionSap;
 import com.nirsa.nw.web.app.servicioatunera.model.entity.NwiPosicionDetalle;
 import com.nirsa.nw.web.app.servicioatunera.model.entity.NwiPosicionDetallePK;
-import com.nirsa.nw.web.app.servicioatunera.model.entity.ResponseSap;
 import com.nirsa.nw.web.app.servicioatunera.model.services.ICabControlService;
 import com.nirsa.nw.web.app.servicioatunera.model.services.INwiCabIntegracionSapService;
 import com.nirsa.nw.web.app.servicioatunera.model.services.INwiDetIntegracionSapService;
@@ -87,7 +80,6 @@ public class SapService implements ISapService {
 		        }
 			}
 			
-			
 			respSap.put("DETALLE", detalle);
 			conexionEnlace.postForObject(ValoresConstantes.urlIntegrador, responseSap, Map.class);
 		}
@@ -109,24 +101,29 @@ public class SapService implements ISapService {
 		Map<String,Object> respSap = new HashMap<>();
 		
 		if(tipo_envio.equals("NO")) {
-			List<Map<String,Object>> payloadSap = (List<Map<String,Object>>)envioSap.get("jsonSap");
+			Map<String,Object> jsonGenerado = (Map<String,Object>)envioSap.get("jsonSap");
+			Map<String,Object> payloadSap = new HashMap<String,Object>();
+			List<Map<String,Object>> arrayJson = new ArrayList<Map<String,Object>>();
+			arrayJson.add(jsonGenerado);
+			payloadSap.put("NOTIFICACION", arrayJson);
+			
 			response.put("envio_sap", payloadSap);
 			respSap = conexionEnlace.postForObject(ValoresConstantes.urlMiddleware.concat("/enviarNotificacion"), payloadSap, Map.class);
 		}
 		
-		if(tipo_envio.equals("CO")) {
+		if(tipo_envio.equals("OF")) {
 			Map<String,Object> payloadSap = (Map<String,Object>)envioSap.get("jsonSap");
 			response.put("envio_sap", payloadSap);
 
 			respSap = conexionEnlace.postForObject(ValoresConstantes.urlMiddleware.concat("/enviarOrden"), payloadSap, Map.class);
 		}
 		
+	
 		Long idIntegracion = (Long) envioSap.get("id_integracion");
 		//List<Map<String,Object>> detalle = (List<Map<String,Object>>) envioSap.get("detalle");
 		
 		response.put("id_integracion", idIntegracion);
 		//response.put("detalle", detalle);
-		
 		
 		response.put("respuesta_sap", respSap);
 		return response;
@@ -139,29 +136,13 @@ public class SapService implements ISapService {
 		Map<String,Object> responseFinal = new HashMap<>();
 		Map<String,Object> envioSap = new HashMap<>();
 		List<Map<String,Object>> detalleSap = new ArrayList<>();
-		
-		String llaveDetalles  = "";
-		
-		switch(tipo_envio) {
-			case "NO":
-				llaveDetalles = "TB_NOTIFICACION";
-				break;
-			case "CO":
-				llaveDetalles = "DETALLE";
-				break;
 				
-			default:
-				llaveDetalles = "DETALLE";
-				break;
-		}
-		
-			
 		// conformación de la cabecera del JSON
 		Set<String> keys = request.getJsonCabecera().keySet();
 		
 		for ( String key : keys ) {
 			Object value = request.getJsonCabecera().get(key);
-			envioSap.put(key, value);	
+			envioSap.put(key.toUpperCase(), value.toString().toUpperCase());	
         }
 		
 	
@@ -170,21 +151,11 @@ public class SapService implements ISapService {
 		Long idintegracion = (Long) response.get("id_integracion");
 		detalleSap = (List<Map<String,Object>>) response.get("detalles");
 		
-		envioSap.put(llaveDetalles, detalleSap);
-		envioSap.put("id_integracion", idintegracion);
+		envioSap.put("DETALLE", detalleSap);
+		envioSap.put("ID_INTEGRACION", "PA".concat(Long.toString(idintegracion).toUpperCase()));
 		
-		List<Map<String,Object>> envioFinal = new ArrayList<>();
-		if(tipo_envio.equals("NO")) {
-			envioFinal.add(envioSap);
-		}
-		
-		if(tipo_envio.equals("NO")) {
-			responseFinal.put("jsonSap", envioFinal);
-		}
-		else {
-			responseFinal.put("jsonSap", envioSap);
-		}
-		
+		responseFinal.put("jsonSap", envioSap);
+	
 		responseFinal.put("id_integracion", idintegracion);
 		responseFinal.put("detalle", detalleSap);
 		
@@ -200,9 +171,9 @@ public class SapService implements ISapService {
 		NwiCabControl controlRegistro = null;
 		//NwiCabControl control = this.nwiCabControlService.buscarPorJson(jsonParams);
 		
-		NwiCabControl control=null;
+		//NwiCabControl control=null;
 		
-		Long idControl = null;
+		//Long idControl = null;
 		Long idintegracion = null;
 		Integer inicioPosicion = 1;
 		
